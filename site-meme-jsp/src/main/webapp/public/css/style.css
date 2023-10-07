@@ -1,0 +1,179 @@
+@charset "ISO-8859-1";
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #F2F2F2;
+    --black: #0C0C0C;
+    --blue: #101A40;
+    --green: #00FF00;
+    --red: #FF0000;
+
+    --font-title: serif;
+    --font-paragraph: sans-serif;
+    --font-link: serif;
+    --font-button: serif;
+
+    --container-max-width: 1000px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+main {
+	min-height: calc(100vh - 170px);
+}
+
+hr {
+    color: var(--blue);
+    margin: 10px 0px 20px 0px;
+    border: 1px solid var(--blue);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-title);
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.3em;
+}
+
+p, a {
+    font-size: 1em;
+}
+
+p {
+	font-family: var(--font-paragraph);
+	line-height: 1.5em;
+}
+
+a {
+	color: var(--blue);
+    font-family: var(--font-link);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+
+button {
+	background-color: var(--blue);
+	color: var(--white);
+	font-family: var(--font-button);
+	font-size: 1em;
+	font-weight: bold;
+	padding: 10px 20px;
+	border: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+form {
+	display: flex;
+    border: 5px solid var(--blue);
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+label {
+	font-size: 1.3em;
+    font-weight: bold;
+}
+
+input {
+    border: 3px solid var(--blue);
+    font-size: 1em;
+    padding: 5px;
+    margin: 0px;
+    width: 100%;
+}
+
+textarea {
+    border: 3px solid var(--blue);
+    font-size: 1.5em;
+    padding: 5px;
+    margin: 0px;
+    resize: none;
+    width: 100%;
+}
+
+.container {
+	max-width: 1024px;
+    padding: 10px;
+	margin: 0px auto;
+}
+
+.link-button {
+	background-color: var(--blue);
+	color: var(--white);
+	font-family: var(--font-button);
+	font-size: 1em;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 10px 20px;
+	border: none;
+}
+
+.link-button:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.message {
+	color: var(--black);
+	font-family: var(--font-paragraph);
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.5em;
+	margin: 0px;
+	padding: 10px;
+}
+
+.message__success {
+	background-color: var(--green);
+}
+
+.message__error {
+	background-color: var(--red);
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.3em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    h3, label, textarea {
+    	font-size: 1em;
+    }
+
+    p, a, button, input, .message {
+        font-size: 0.9em;
+    }
+}

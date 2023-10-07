@@ -1,0 +1,17 @@
+@charset "ISO-8859-1";
+
+.footer {
+	background-color: var(--blue);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100px;
+}
+
+.footer__paragraph {
+	color: var(--white);
+}
+
+.footer__link {
+	color: var(--white);
+}
