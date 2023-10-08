@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.github.julioevencio.sitememejsp.dto.RegisterRequestDTO;
+import com.github.julioevencio.sitememejsp.dto.auth.RegisterRequestDTO;
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;

@@ -1,4 +1,4 @@
-package com.github.julioevencio.sitememejsp.dto;
+package com.github.julioevencio.sitememejsp.dto.auth;
 
 import java.io.Serializable;
 

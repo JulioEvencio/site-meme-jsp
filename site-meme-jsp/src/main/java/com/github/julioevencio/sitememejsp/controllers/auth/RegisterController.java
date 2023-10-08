@@ -1,8 +1,8 @@
-package com.github.julioevencio.sitememejsp.controllers;
+package com.github.julioevencio.sitememejsp.controllers.auth;
 
 import java.io.IOException;
 
-import com.github.julioevencio.sitememejsp.dto.RegisterRequestDTO;
+import com.github.julioevencio.sitememejsp.dto.auth.RegisterRequestDTO;
 import com.github.julioevencio.sitememejsp.exceptions.InvalidDataException;
 import com.github.julioevencio.sitememejsp.services.UserService;
 import com.github.julioevencio.sitememejsp.services.UserServiceImpl;
@@ -24,7 +24,7 @@ public class RegisterController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/register.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/auth/register.jsp");
 
 		request.setAttribute("messageSuccess", false);
 		request.setAttribute("messageError", false);
@@ -56,7 +56,7 @@ public class RegisterController extends HttpServlet {
 			request.setAttribute("message", e.getMessage());
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/register.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/auth/register.jsp");
 		dispatcher.forward(request, response);
 	}
 

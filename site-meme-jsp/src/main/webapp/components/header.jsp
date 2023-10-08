@@ -21,7 +21,7 @@
 					</c:when>
 					<c:otherwise>
 						<li class="menu__item">
-							<a class="menu__link" href="<c:url value='/register' />">Register</a>
+							<a class="menu__link" href="<c:url value='/auth/register' />">Register</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

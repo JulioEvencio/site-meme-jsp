@@ -24,7 +24,7 @@
 					<span class="message message__error">${message}</span>
 				</c:if>
 
-				<form class="register__form" action="<c:url value='/register' />" method="post">
+				<form class="register__form" action="<c:url value='/auth/register' />" method="post">
 					<label>Username:</label>
 					<input type="text" name="username" value="${username}" required />
 

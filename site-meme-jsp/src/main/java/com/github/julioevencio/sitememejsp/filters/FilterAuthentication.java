@@ -23,8 +23,8 @@ public class FilterAuthentication implements Filter {
 	private final List<String> URLS_ROLE_ADMIN;
 
 	public FilterAuthentication() {
-		URLS_PUBLIC = Arrays.asList("/index.jsp", "/login", "/register");
-		URLS_ROLE_USER = Arrays.asList("/profile", "/logout");
+		URLS_PUBLIC = Arrays.asList("/index.jsp", "/auth/login", "/auth/register");
+		URLS_ROLE_USER = Arrays.asList("/profile", "/auth/logout");
 		URLS_ROLE_ADMIN = Arrays.asList("/admin");
 	}
 

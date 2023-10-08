@@ -27,11 +27,11 @@
 
 	<servlet>
 		<servlet-name>RegisterController</servlet-name>
-		<servlet-class>com.github.julioevencio.sitememejsp.controllers.RegisterController</servlet-class>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.auth.RegisterController</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>RegisterController</servlet-name>
-		<url-pattern>/register</url-pattern>
+		<url-pattern>/auth/register</url-pattern>
 	</servlet-mapping>
 </web-app>
