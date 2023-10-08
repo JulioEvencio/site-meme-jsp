@@ -18,6 +18,10 @@
 						<li class="menu__item">
 							<a class="menu__link" href="<c:url value='/user/profile' />">profile</a>
 						</li>
+						
+						<li class="menu__item">
+							<a class="menu__link" href="<c:url value='/auth/logout' />">logout</a>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="menu__item">

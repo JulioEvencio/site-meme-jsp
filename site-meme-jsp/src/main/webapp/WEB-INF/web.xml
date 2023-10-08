@@ -54,4 +54,14 @@
 		<servlet-name>ProfileController</servlet-name>
 		<url-pattern>/user/profile</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.auth.LogoutController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LogoutController</servlet-name>
+		<url-pattern>/auth/logout</url-pattern>
+	</servlet-mapping>
 </web-app>
