@@ -16,20 +16,20 @@
 			<hr />
 
 			<section class="register">
-				<c:if test="${messageSuccess}">
-					<span class="message message__success">${message}</span>
+				<c:if test="${registerResponseDTO.messageSuccess}">
+					<span class="message message__success">${registerResponseDTO.message}</span>
 				</c:if>
 
-				<c:if test="${messageError}">
-					<span class="message message__error">${message}</span>
+				<c:if test="${registerResponseDTO.messageError}">
+					<span class="message message__error">${registerResponseDTO.message}</span>
 				</c:if>
 
 				<form class="register__form" action="<c:url value='/auth/register' />" method="post">
 					<label>Username:</label>
-					<input type="text" name="username" value="${username}" required />
+					<input type="text" name="username" value="${registerResponseDTO.username}" required />
 
 					<label>E-mail:</label>
-					<input type="email" name="email" value="${email}" required />
+					<input type="email" name="email" value="${registerResponseDTO.email}" required />
 
 					<label>Password:</label>
 					<input type="password" name="password" required />

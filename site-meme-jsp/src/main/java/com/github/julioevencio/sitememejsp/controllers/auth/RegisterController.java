@@ -3,6 +3,7 @@ package com.github.julioevencio.sitememejsp.controllers.auth;
 import java.io.IOException;
 
 import com.github.julioevencio.sitememejsp.dto.auth.RegisterRequestDTO;
+import com.github.julioevencio.sitememejsp.dto.auth.RegisterResponseDTO;
 import com.github.julioevencio.sitememejsp.exceptions.InvalidDataException;
 import com.github.julioevencio.sitememejsp.services.UserService;
 import com.github.julioevencio.sitememejsp.services.UserServiceImpl;
@@ -24,17 +25,16 @@ public class RegisterController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RegisterResponseDTO registerResponseDTO = new RegisterResponseDTO();
+
+		request.setAttribute("registerResponseDTO", registerResponseDTO);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/auth/register.jsp");
-
-		request.setAttribute("messageSuccess", false);
-		request.setAttribute("messageError", false);
-
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("messageSuccess", false);
-		request.setAttribute("messageError", false);
+		RegisterResponseDTO registerResponseDTO = new RegisterResponseDTO();
 
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
@@ -46,15 +46,16 @@ public class RegisterController extends HttpServlet {
 
 			userService.register(dto);
 
-			request.setAttribute("messageSuccess", true);
-			request.setAttribute("message", "Account created successfully!");
+			registerResponseDTO.setMessage("Account created successfully!");
+			registerResponseDTO.setMessageSuccess(true);
 		} catch (InvalidDataException e) {
-			request.setAttribute("email", email);
-			request.setAttribute("username", username);
-			
-			request.setAttribute("messageError", true);
-			request.setAttribute("message", e.getMessage());
+			registerResponseDTO.setUsername(username);
+			registerResponseDTO.setEmail(email);
+			registerResponseDTO.setMessage(e.getMessage());
+			registerResponseDTO.setMessageError(true);
 		}
+
+		request.setAttribute("registerResponseDTO", registerResponseDTO);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/auth/register.jsp");
 		dispatcher.forward(request, response);
