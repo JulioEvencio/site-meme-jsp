@@ -13,11 +13,6 @@ public class TagEntity implements Serializable {
 	public TagEntity() {
 	}
 
-	public TagEntity(UUID uuid, String name) {
-		this.uuid = uuid;
-		this.name = name;
-	}
-
 	public UUID getUuid() {
 		return uuid;
 	}

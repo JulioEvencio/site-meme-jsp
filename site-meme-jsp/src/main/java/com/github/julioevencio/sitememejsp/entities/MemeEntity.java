@@ -17,14 +17,6 @@ public class MemeEntity implements Serializable {
 	public MemeEntity() {
 	}
 
-	public MemeEntity(UUID uuid, String image, UserEntity user, TagEntity tags, List<CommentEntity> comments) {
-		this.uuid = uuid;
-		this.image = image;
-		this.user = user;
-		this.tags = tags;
-		this.comments = comments;
-	}
-
 	public UUID getUuid() {
 		return uuid;
 	}

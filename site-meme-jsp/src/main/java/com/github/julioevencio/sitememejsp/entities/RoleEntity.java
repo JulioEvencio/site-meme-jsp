@@ -13,11 +13,6 @@ public class RoleEntity implements Serializable {
 	public RoleEntity() {
 	}
 
-	public RoleEntity(UUID uuid, String name) {
-		this.uuid = uuid;
-		this.name = name;
-	}
-
 	public UUID getUuid() {
 		return uuid;
 	}

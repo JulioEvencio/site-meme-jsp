@@ -21,18 +21,6 @@ public class UserEntity implements Serializable {
 	public UserEntity() {
 	}
 
-	public UserEntity(UUID uuid, String username, String email, String password, String photo, Boolean enabled, List<MemeEntity> memes, List<CommentEntity> comments, List<RoleEntity> roles) {
-		this.uuid = uuid;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.photo = photo;
-		this.enabled = enabled;
-		this.memes = memes;
-		this.comments = comments;
-		this.roles = roles;
-	}
-
 	public UUID getUuid() {
 		return uuid;
 	}

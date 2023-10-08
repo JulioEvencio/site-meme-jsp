@@ -15,13 +15,6 @@ public class CommentEntity implements Serializable {
 	public CommentEntity() {
 	}
 
-	public CommentEntity(UUID uuid, String comment, MemeEntity meme, UserEntity user) {
-		this.uuid = uuid;
-		this.comment = comment;
-		this.meme = meme;
-		this.user = user;
-	}
-
 	public UUID getUuid() {
 		return uuid;
 	}
