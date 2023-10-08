@@ -25,10 +25,6 @@ public class RegisterController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RegisterResponseDTO registerResponseDTO = new RegisterResponseDTO();
-
-		request.setAttribute("registerResponseDTO", registerResponseDTO);
-
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/auth/register.jsp");
 		dispatcher.forward(request, response);
 	}
