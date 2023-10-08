@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
 	<jsp:include page="/components/config.jsp"></jsp:include>
 </head>
@@ -10,7 +10,7 @@
 	
 	<main>
 		<div class="container">
-			<h1>Página não encontrada</h1>
+			<h1>Page not found</h1>
 			<hr />
 			
 			<h2>404</h2>

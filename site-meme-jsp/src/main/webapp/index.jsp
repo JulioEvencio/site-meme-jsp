@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
 	<jsp:include page="/components/config.jsp"></jsp:include>
 </head>

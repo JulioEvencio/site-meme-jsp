@@ -1,6 +1,6 @@
 package com.github.julioevencio.sitememejsp.exceptions;
 
-public class DatabaseConnectionFailedException extends RuntimeException {
+public class DatabaseConnectionFailedException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 

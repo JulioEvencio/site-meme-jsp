@@ -8,7 +8,7 @@ import com.github.julioevencio.sitememejsp.exceptions.DatabaseConnectionFailedEx
 
 public class ConnectionFactory {
 
-	public static Connection getConnection() {
+	public static Connection getConnection() throws DatabaseConnectionFailedException {
 		try {
 			String url = "jdbc:postgresql://localhost:5432/db_site_meme_jsp";
 			String user = "postgres";
