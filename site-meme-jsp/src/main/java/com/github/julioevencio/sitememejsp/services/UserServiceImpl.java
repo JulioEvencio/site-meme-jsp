@@ -2,10 +2,13 @@ package com.github.julioevencio.sitememejsp.services;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.github.julioevencio.sitememejsp.dto.auth.LoginRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.auth.RegisterRequestDTO;
+import com.github.julioevencio.sitememejsp.dto.auth.UserSessionDTO;
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
@@ -70,6 +73,23 @@ public class UserServiceImpl implements UserService {
 				throw new RuntimeException();
 			}
 		} catch (SQLException | DatabaseConnectionFailedException databaseConnectionFailedException) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public UserSessionDTO login(LoginRequestDTO dto) throws InvalidDataException {
+		try (Connection connection = ConnectionFactory.getConnection()) {
+			UserEntity userEntity = userRepository.findByEmail(connection, dto.getEmail()).orElseThrow(() -> new InvalidDataException("E-mail not registered!"));
+
+			if (!BCrypt.checkpw(dto.getPassword(), userEntity.getPassword())) {
+				throw new InvalidDataException("Incorrect password!");
+			}
+
+			List<String> roles = roleRepository.findAllByUserUuid(connection, userEntity.getUuid()).stream().map(role -> role.getName()).toList();
+
+			return new UserSessionDTO(userEntity.getUuid(), userEntity.getUsername(), roles);
+		} catch (SQLException | DatabaseConnectionFailedException | FindFailedException e) {
 			throw new RuntimeException();
 		}
 	}

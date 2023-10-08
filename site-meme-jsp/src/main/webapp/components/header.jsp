@@ -14,12 +14,16 @@
 				</li>
 
 				<c:choose>
-					<c:when test="${not empty sessionScope.user}">
+					<c:when test="${not empty sessionScope.userSessionDTO}">
 						<li class="menu__item">
-							<a class="menu__link" href="<c:url value='/profile' />">profile</a>
+							<a class="menu__link" href="<c:url value='/user/profile' />">profile</a>
 						</li>
 					</c:when>
 					<c:otherwise>
+						<li class="menu__item">
+							<a class="menu__link" href="<c:url value='/auth/login' />">Login</a>
+						</li>
+
 						<li class="menu__item">
 							<a class="menu__link" href="<c:url value='/auth/register' />">Register</a>
 						</li>

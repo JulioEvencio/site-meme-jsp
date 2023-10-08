@@ -34,4 +34,24 @@
 		<servlet-name>RegisterController</servlet-name>
 		<url-pattern>/auth/register</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.auth.LoginController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/auth/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProfileController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.user.ProfileController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProfileController</servlet-name>
+		<url-pattern>/user/profile</url-pattern>
+	</servlet-mapping>
 </web-app>

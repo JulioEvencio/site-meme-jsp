@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.github.julioevencio.sitememejsp.entities.RoleEntity;
-import com.github.julioevencio.sitememejsp.entities.UserEntity;
+import com.github.julioevencio.sitememejsp.dto.auth.UserSessionDTO;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -24,7 +23,7 @@ public class FilterAuthentication implements Filter {
 
 	public FilterAuthentication() {
 		URLS_PUBLIC = Arrays.asList("/index.jsp", "/auth/login", "/auth/register");
-		URLS_ROLE_USER = Arrays.asList("/profile", "/auth/logout");
+		URLS_ROLE_USER = Arrays.asList("/user/profile", "/auth/logout");
 		URLS_ROLE_ADMIN = Arrays.asList("/admin");
 	}
 
@@ -38,13 +37,13 @@ public class FilterAuthentication implements Filter {
 		} else if (URLS_PUBLIC.contains(url)) {
 			chain.doFilter(req, res);
 		} else if (URLS_ROLE_USER.contains(url)) {
-			UserEntity userEntity = (UserEntity) request.getSession().getAttribute("user");
+			UserSessionDTO userSessionDTO = (UserSessionDTO) request.getSession().getAttribute("userSessionDTO");
 
-			if (userEntity != null) {
+			if (userSessionDTO != null) {
 				boolean access = false;
 
-				for (RoleEntity roleEntity : userEntity.getRoles()) {
-					if (roleEntity.getName().equals("ROLE_USER")) {
+				for (String role : userSessionDTO.getRoles()) {
+					if (role.equals("ROLE_USER")) {
 						access = true;
 						break;
 					}
@@ -59,13 +58,13 @@ public class FilterAuthentication implements Filter {
 			HttpServletResponse response = (HttpServletResponse) res;
 			response.sendRedirect(request.getContextPath() + "/auth/login");
 		} else if (URLS_ROLE_ADMIN.contains(url)) {
-			UserEntity userEntity = (UserEntity) request.getSession().getAttribute("user");
+			UserSessionDTO userSessionDTO = (UserSessionDTO) request.getSession().getAttribute("userSessionDTO");
 
-			if (userEntity != null) {
+			if (userSessionDTO != null) {
 				boolean access = false;
 
-				for (RoleEntity roleEntity : userEntity.getRoles()) {
-					if (roleEntity.getName().equals("ROLE_ADMIN")) {
+				for (String role : userSessionDTO.getRoles()) {
+					if (role.equals("ROLE_ADMIN")) {
 						access = true;
 						break;
 					}
