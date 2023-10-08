@@ -8,29 +8,27 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
-import com.github.julioevencio.sitememejsp.exceptions.DatabaseConnectionFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
 
 public class RoleRepositoryImpl implements RoleRepository {
 
 	@Override
-	public Optional<RoleEntity> findByName(String name) throws DatabaseConnectionFailedException, FindFailedException {
-		try (Connection connection = ConnectionFactory.getConnection()) {
+	public Optional<RoleEntity> findByName(Connection connection, String name) throws FindFailedException {
+		String sql = "SELECT * FROM tb_roles WHERE name = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			Optional<RoleEntity> optional = Optional.empty();
-			String sql = "SELECT * FROM tb_roles WHERE name = ?;";
 
-			try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-				stmt.setString(1, name);
+			stmt.setString(1, name);
 
-				try (ResultSet rs = stmt.executeQuery()) {
-					if (rs.next()) {
-						RoleEntity roleEntity = new RoleEntity();
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					RoleEntity roleEntity = new RoleEntity();
 
-						roleEntity.setUuid(UUID.fromString(rs.getString("uuid")));
-						roleEntity.setName(rs.getString("name"));
+					roleEntity.setUuid(UUID.fromString(rs.getString("uuid")));
+					roleEntity.setName(rs.getString("name"));
 
-						optional = Optional.of(roleEntity);
-					}
+					optional = Optional.of(roleEntity);
 				}
 			}
 
