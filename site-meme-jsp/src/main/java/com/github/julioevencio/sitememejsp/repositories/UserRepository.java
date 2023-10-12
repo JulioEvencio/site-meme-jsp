@@ -2,6 +2,7 @@ package com.github.julioevencio.sitememejsp.repositories;
 
 import java.sql.Connection;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
@@ -9,6 +10,8 @@ import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
 
 public interface UserRepository {
+
+	Optional<UserEntity> findByUuid(Connection connection, UUID uuid) throws FindFailedException;
 
 	Optional<UserEntity> findByUsername(Connection connection, String username) throws FindFailedException;
 

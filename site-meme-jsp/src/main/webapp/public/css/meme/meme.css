@@ -1,0 +1,20 @@
+@charset "ISO-8859-1";
+
+.image {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	padding: 10px;
+	border: 3px solid var(--blue);
+}
+
+.image__figure {
+	max-width: 100%;
+}
+
+.image__img {
+	width: 100%;
+	border: 3px solid var(--blue);
+}

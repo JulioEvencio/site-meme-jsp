@@ -15,6 +15,35 @@ import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
 public class UserRepositoryImpl implements UserRepository {
 
 	@Override
+	public Optional<UserEntity> findByUuid(Connection connection, UUID uuid) throws FindFailedException {
+		String sql = "SELECT * FROM tb_users WHERE uuid = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			Optional<UserEntity> optional = Optional.empty();
+
+			stmt.setObject(1, uuid);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					UserEntity userEntity = new UserEntity();
+
+					userEntity.setUuid(UUID.fromString(rs.getString("uuid")));
+					userEntity.setEmail(rs.getString("email"));
+					userEntity.setUsername(rs.getString("username"));
+					userEntity.setPassword(rs.getString("password"));
+					userEntity.setEnabled(rs.getBoolean("enabled"));
+
+					optional = Optional.of(userEntity);
+				}
+			}
+
+			return optional;
+		} catch (SQLException e) {
+			throw new FindFailedException(e.getMessage());
+		}
+	}
+
+	@Override
 	public Optional<UserEntity> findByUsername(Connection connection, String username) throws FindFailedException {
 		String sql = "SELECT * FROM tb_users WHERE username = ?;";
 

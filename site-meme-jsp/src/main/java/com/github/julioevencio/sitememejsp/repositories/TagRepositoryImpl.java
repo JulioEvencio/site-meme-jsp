@@ -39,6 +39,32 @@ public class TagRepositoryImpl implements TagRepository {
 	}
 
 	@Override
+	public Optional<TagEntity> findByUuid(Connection connection, UUID uuid) throws FindFailedException {
+		String sql = "SELECT * FROM tb_tags WHERE uuid = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			Optional<TagEntity> optional = Optional.empty();
+
+			stmt.setObject(1, uuid);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					TagEntity tagEntity = new TagEntity();
+
+					tagEntity.setUuid(UUID.fromString(rs.getString("uuid")));
+					tagEntity.setName(rs.getString("name"));
+
+					optional = Optional.of(tagEntity);
+				}
+			}
+
+			return optional;
+		} catch (SQLException e) {
+			throw new FindFailedException(e.getMessage());
+		}
+	}
+
+	@Override
 	public Optional<TagEntity> findByName(Connection connection, String name) throws FindFailedException {
 		String sql = "SELECT * FROM tb_tags WHERE name = ?;";
 

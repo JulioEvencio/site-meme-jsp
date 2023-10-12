@@ -79,4 +79,14 @@
 		<servlet-name>PostMemeController</servlet-name>
 		<url-pattern>/meme/post</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MemeController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.meme.MemeController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MemeController</servlet-name>
+		<url-pattern>/meme</url-pattern>
+	</servlet-mapping>
 </web-app>
