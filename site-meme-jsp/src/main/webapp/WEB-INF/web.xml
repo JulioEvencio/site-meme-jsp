@@ -46,6 +46,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.auth.LogoutController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LogoutController</servlet-name>
+		<url-pattern>/auth/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>ProfileController</servlet-name>
 		<servlet-class>com.github.julioevencio.sitememejsp.controllers.user.ProfileController</servlet-class>
 	</servlet>
@@ -56,12 +66,17 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>LogoutController</servlet-name>
-		<servlet-class>com.github.julioevencio.sitememejsp.controllers.auth.LogoutController</servlet-class>
+		<servlet-name>PostMemeController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.meme.PostMemeController</servlet-class>
+		<multipart-config>
+        	<max-file-size>10485760</max-file-size>
+        	<max-request-size>52428800</max-request-size>
+        	<file-size-threshold>2097152</file-size-threshold>
+	    </multipart-config>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>LogoutController</servlet-name>
-		<url-pattern>/auth/logout</url-pattern>
+		<servlet-name>PostMemeController</servlet-name>
+		<url-pattern>/meme/post</url-pattern>
 	</servlet-mapping>
 </web-app>

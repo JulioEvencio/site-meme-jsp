@@ -111,6 +111,14 @@ input {
     width: 100%;
 }
 
+select {
+	border: 3px solid var(--blue);
+    font-size: 1em;
+    padding: 5px;
+    margin: 0px;
+    width: 100%;
+}
+
 textarea {
     border: 3px solid var(--blue);
     font-size: 1.5em;

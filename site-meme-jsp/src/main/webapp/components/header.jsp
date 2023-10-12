@@ -16,11 +16,11 @@
 				<c:choose>
 					<c:when test="${not empty sessionScope.userSessionDTO}">
 						<li class="menu__item">
-							<a class="menu__link" href="<c:url value='/user/profile' />">profile</a>
+							<a class="menu__link" href="<c:url value='/user/profile' />">Profile</a>
 						</li>
 						
 						<li class="menu__item">
-							<a class="menu__link" href="<c:url value='/auth/logout' />">logout</a>
+							<a class="menu__link" href="<c:url value='/auth/logout' />">Logout</a>
 						</li>
 					</c:when>
 					<c:otherwise>

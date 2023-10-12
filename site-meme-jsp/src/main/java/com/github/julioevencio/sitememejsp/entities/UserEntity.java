@@ -12,7 +12,7 @@ public class UserEntity implements Serializable {
 	private String username;
 	private String email;
 	private String password;
-	private String photo;
+	private ImageEntity photo;
 	private Boolean enabled;
 	private List<MemeEntity> memes;
 	private List<CommentEntity> comments;
@@ -53,11 +53,11 @@ public class UserEntity implements Serializable {
 		this.password = password;
 	}
 
-	public String getPhoto() {
+	public ImageEntity getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(ImageEntity photo) {
 		this.photo = photo;
 	}
 

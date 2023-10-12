@@ -9,9 +9,9 @@ public class MemeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private UUID uuid;
-	private String image;
+	private ImageEntity image;
 	private UserEntity user;
-	private TagEntity tags;
+	private TagEntity tag;
 	private List<CommentEntity> comments;
 
 	public MemeEntity() {
@@ -25,11 +25,11 @@ public class MemeEntity implements Serializable {
 		this.uuid = uuid;
 	}
 
-	public String getImage() {
+	public ImageEntity getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(ImageEntity image) {
 		this.image = image;
 	}
 
@@ -41,12 +41,12 @@ public class MemeEntity implements Serializable {
 		this.user = user;
 	}
 
-	public TagEntity getTags() {
-		return tags;
+	public TagEntity getTag() {
+		return tag;
 	}
 
-	public void setTags(TagEntity tags) {
-		this.tags = tags;
+	public void setTag(TagEntity tag) {
+		this.tag = tag;
 	}
 
 	public List<CommentEntity> getComments() {

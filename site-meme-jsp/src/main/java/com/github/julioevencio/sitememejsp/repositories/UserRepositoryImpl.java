@@ -31,7 +31,6 @@ public class UserRepositoryImpl implements UserRepository {
 					userEntity.setEmail(rs.getString("email"));
 					userEntity.setUsername(rs.getString("username"));
 					userEntity.setPassword(rs.getString("password"));
-					userEntity.setPhoto(rs.getString("photo"));
 					userEntity.setEnabled(rs.getBoolean("enabled"));
 
 					optional = Optional.of(userEntity);
@@ -61,7 +60,6 @@ public class UserRepositoryImpl implements UserRepository {
 					userEntity.setEmail(rs.getString("email"));
 					userEntity.setUsername(rs.getString("username"));
 					userEntity.setPassword(rs.getString("password"));
-					userEntity.setPhoto(rs.getString("photo"));
 					userEntity.setEnabled(rs.getBoolean("enabled"));
 
 					optional = Optional.of(userEntity);
@@ -76,14 +74,13 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void save(Connection connection, UserEntity userEntity) throws CreateFailedException {
-		String sql = "INSERT INTO tb_users (uuid, username, email, password, photo, enabled) VALUES (gen_random_uuid(), ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO tb_users (uuid, username, email, password, enabled) VALUES (gen_random_uuid(), ?, ?, ?, ?);";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, userEntity.getUsername());
 			stmt.setString(2, userEntity.getEmail());
 			stmt.setString(3, userEntity.getPassword());
-			stmt.setString(4, userEntity.getPhoto());
-			stmt.setBoolean(5, userEntity.getEnabled());
+			stmt.setBoolean(4, userEntity.getEnabled());
 
 			stmt.execute();
 		} catch (SQLException e) {

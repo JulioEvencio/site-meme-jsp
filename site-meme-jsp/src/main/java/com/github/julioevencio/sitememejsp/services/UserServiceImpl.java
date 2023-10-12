@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
 				userEntity.setUsername(dto.getUsername());
 				userEntity.setEmail(dto.getEmail());
 				userEntity.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt()));
-				userEntity.setPhoto("");
 				userEntity.setEnabled(true);
 
 				userRepository.save(connection, userEntity);
