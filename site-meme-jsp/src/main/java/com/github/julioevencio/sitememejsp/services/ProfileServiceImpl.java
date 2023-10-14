@@ -50,7 +50,7 @@ public class ProfileServiceImpl implements ProfileService {
 				ImageEntity imageEntity = imageRepository.findByUuid(connection, memeEntity.getImage().getUuid()).orElseThrow(() -> new RuntimeException());
 				MemeResponseDTO memeResponseDTO = new MemeResponseDTO();
 
-				memeResponseDTO.setUuid(imageEntity.getUuid());
+				memeResponseDTO.setUuid(memeEntity.getUuid());
 				memeResponseDTO.setImage(imageEntity.getImageBase64());
 
 				memes.add(memeResponseDTO);
