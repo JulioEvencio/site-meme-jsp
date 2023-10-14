@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.github.julioevencio.sitememejsp.dto.auth.LoginRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.auth.RegisterRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.auth.UserSessionDTO;
+import com.github.julioevencio.sitememejsp.entities.ImageEntity;
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
@@ -16,6 +17,8 @@ import com.github.julioevencio.sitememejsp.exceptions.DatabaseConnectionFailedEx
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.InvalidDataException;
 import com.github.julioevencio.sitememejsp.repositories.ConnectionFactory;
+import com.github.julioevencio.sitememejsp.repositories.ImageRepository;
+import com.github.julioevencio.sitememejsp.repositories.ImageRepositoryImpl;
 import com.github.julioevencio.sitememejsp.repositories.RoleRepository;
 import com.github.julioevencio.sitememejsp.repositories.RoleRepositoryImpl;
 import com.github.julioevencio.sitememejsp.repositories.UserRepository;
@@ -25,10 +28,12 @@ public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
+	private final ImageRepository imageRepository;
 
 	public UserServiceImpl() {
-		userRepository = new UserRepositoryImpl();
-		roleRepository = new RoleRepositoryImpl();
+		this.userRepository = new UserRepositoryImpl();
+		this.roleRepository = new RoleRepositoryImpl();
+		this.imageRepository = new ImageRepositoryImpl();
 	}
 
 	@Override
@@ -47,12 +52,18 @@ public class UserServiceImpl implements UserService {
 
 				UserEntity userEntity = new UserEntity();
 				RoleEntity roleEntity;
+				ImageEntity imageEntity = new ImageEntity();
+
+				imageEntity.setImageBase64("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg");
+				imageEntity.setType("link");
+				imageEntity = imageRepository.save(connection, imageEntity);
 
 				userEntity.setUuid(null);
 				userEntity.setUsername(dto.getUsername());
 				userEntity.setEmail(dto.getEmail());
 				userEntity.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt()));
 				userEntity.setEnabled(true);
+				userEntity.setPhoto(imageEntity);
 
 				userRepository.save(connection, userEntity);
 

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS tb_users (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
     enabled BOOLEAN NOT NULL,
-    photo_uuid UUID REFERENCES tb_images(uuid)
+    photo_uuid UUID NOT NULL REFERENCES tb_images(uuid)
 );
 
 CREATE TABLE IF NOT EXISTS tb_users_roles (

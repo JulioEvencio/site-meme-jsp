@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.github.julioevencio.sitememejsp.entities.ImageEntity;
 import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
@@ -26,12 +27,15 @@ public class UserRepositoryImpl implements UserRepository {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					UserEntity userEntity = new UserEntity();
+					ImageEntity imageEntity = new ImageEntity();
 
 					userEntity.setUuid(UUID.fromString(rs.getString("uuid")));
 					userEntity.setEmail(rs.getString("email"));
 					userEntity.setUsername(rs.getString("username"));
 					userEntity.setPassword(rs.getString("password"));
 					userEntity.setEnabled(rs.getBoolean("enabled"));
+					userEntity.setPhoto(imageEntity);
+					userEntity.getPhoto().setUuid(UUID.fromString(rs.getString("photo_uuid")));;
 
 					optional = Optional.of(userEntity);
 				}
@@ -55,12 +59,15 @@ public class UserRepositoryImpl implements UserRepository {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					UserEntity userEntity = new UserEntity();
+					ImageEntity imageEntity = new ImageEntity();
 
 					userEntity.setUuid(UUID.fromString(rs.getString("uuid")));
 					userEntity.setEmail(rs.getString("email"));
 					userEntity.setUsername(rs.getString("username"));
 					userEntity.setPassword(rs.getString("password"));
 					userEntity.setEnabled(rs.getBoolean("enabled"));
+					userEntity.setPhoto(imageEntity);
+					userEntity.getPhoto().setUuid(UUID.fromString(rs.getString("photo_uuid")));;
 
 					optional = Optional.of(userEntity);
 				}
@@ -84,12 +91,15 @@ public class UserRepositoryImpl implements UserRepository {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					UserEntity userEntity = new UserEntity();
+					ImageEntity imageEntity = new ImageEntity();
 
 					userEntity.setUuid(UUID.fromString(rs.getString("uuid")));
 					userEntity.setEmail(rs.getString("email"));
 					userEntity.setUsername(rs.getString("username"));
 					userEntity.setPassword(rs.getString("password"));
 					userEntity.setEnabled(rs.getBoolean("enabled"));
+					userEntity.setPhoto(imageEntity);
+					userEntity.getPhoto().setUuid(UUID.fromString(rs.getString("photo_uuid")));;
 
 					optional = Optional.of(userEntity);
 				}
@@ -103,13 +113,14 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void save(Connection connection, UserEntity userEntity) throws CreateFailedException {
-		String sql = "INSERT INTO tb_users (uuid, username, email, password, enabled) VALUES (gen_random_uuid(), ?, ?, ?, ?);";
+		String sql = "INSERT INTO tb_users (uuid, username, email, password, enabled, photo_uuid) VALUES (gen_random_uuid(), ?, ?, ?, ?, ?);";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, userEntity.getUsername());
 			stmt.setString(2, userEntity.getEmail());
 			stmt.setString(3, userEntity.getPassword());
 			stmt.setBoolean(4, userEntity.getEnabled());
+			stmt.setObject(5, userEntity.getPhoto().getUuid());
 
 			stmt.execute();
 		} catch (SQLException e) {

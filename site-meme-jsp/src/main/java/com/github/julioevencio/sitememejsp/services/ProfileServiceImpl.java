@@ -42,7 +42,9 @@ public class ProfileServiceImpl implements ProfileService {
 			ProfileResponseDTO profileResponseDTO = new ProfileResponseDTO();
 
 			profileResponseDTO.setUsername(userEntity.getUsername());
-			// profileResponseDTO.setPhoto(userEntity.getPhoto().getImageBase64());
+
+			ImageEntity userPhoto = imageRepository.findByUuid(connection, userEntity.getPhoto().getUuid()).orElseThrow(() -> new RuntimeException());
+			profileResponseDTO.setPhoto(userPhoto.getImageBase64());
 
 			List<MemeResponseDTO> memes = new ArrayList<>();
 
