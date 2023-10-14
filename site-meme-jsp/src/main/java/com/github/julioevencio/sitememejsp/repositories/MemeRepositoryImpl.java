@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,6 +50,43 @@ public class MemeRepositoryImpl implements MemeRepository {
 			}
 
 			return optional;
+		} catch (SQLException e) {
+			throw new FindFailedException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<MemeEntity> findAllByUserUuid(Connection connection, UUID uuid) throws FindFailedException {
+		String sql = "SELECT * FROM tb_memes WHERE user_uuid = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			List<MemeEntity> memesEntities = new ArrayList<>();
+
+			stmt.setObject(1, uuid);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					MemeEntity memeEntity = new MemeEntity();
+
+					ImageEntity imageEntity = new ImageEntity();
+					UserEntity userEntity = new UserEntity();
+					TagEntity tagEntity = new TagEntity();
+
+					memeEntity.setUuid(UUID.fromString(rs.getString("uuid")));
+
+					imageEntity.setUuid(UUID.fromString(rs.getString("image_uuid")));
+					userEntity.setUuid(UUID.fromString(rs.getString("user_uuid")));
+					tagEntity.setUuid(UUID.fromString(rs.getString("tag_uuid")));
+
+					memeEntity.setImage(imageEntity);
+					memeEntity.setUser(userEntity);
+					memeEntity.setTag(tagEntity);
+
+					memesEntities.add(memeEntity);
+				}
+			}
+
+			return memesEntities;
 		} catch (SQLException e) {
 			throw new FindFailedException(e.getMessage());
 		}
