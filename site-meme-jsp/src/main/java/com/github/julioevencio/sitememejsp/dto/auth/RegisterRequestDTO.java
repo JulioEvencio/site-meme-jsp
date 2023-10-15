@@ -33,7 +33,7 @@ public class RegisterRequestDTO implements Serializable {
 			throw new InvalidDataException("Password invalid!");
 		}
 
-		if (!password.equals(passwordConfirm)) {
+		if (passwordConfirm == null || !password.equals(passwordConfirm)) {
 			throw new InvalidDataException("The passwords are different!");
 		}
 
