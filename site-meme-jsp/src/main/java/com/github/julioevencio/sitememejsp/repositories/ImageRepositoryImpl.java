@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.github.julioevencio.sitememejsp.entities.ImageEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
+import com.github.julioevencio.sitememejsp.exceptions.UpdateFailedException;
 
 public class ImageRepositoryImpl implements ImageRepository {
 	
@@ -57,6 +58,21 @@ public class ImageRepositoryImpl implements ImageRepository {
 			return imageEntity;
 		} catch (SQLException e) {
 			throw new CreateFailedException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void update(Connection connection, ImageEntity imageEntity) throws UpdateFailedException {
+		String sql = "UPDATE tb_images SET imageBase64 = ?, type = ? WHERE uuid = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, imageEntity.getImageBase64());
+			stmt.setString(2, imageEntity.getType());
+			stmt.setObject(3, imageEntity.getUuid());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new UpdateFailedException(e.getMessage());
 		}
 	}
 

@@ -12,6 +12,7 @@ import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
+import com.github.julioevencio.sitememejsp.exceptions.UpdateFailedException;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -139,6 +140,22 @@ public class UserRepositoryImpl implements UserRepository {
 			stmt.execute();
 		} catch (SQLException e) {
 			throw new CreateFailedException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void update(Connection connection, UserEntity userEntity) throws UpdateFailedException {
+		String sql = "UPDATE tb_users SET username = ?, email = ?, password = ? WHERE uuid = ?;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, userEntity.getUsername());
+			stmt.setString(2, userEntity.getEmail());
+			stmt.setString(3, userEntity.getPassword());
+			stmt.setObject(4, userEntity.getUuid());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new UpdateFailedException(e.getMessage());
 		}
 	}
 

@@ -8,6 +8,7 @@ import com.github.julioevencio.sitememejsp.entities.RoleEntity;
 import com.github.julioevencio.sitememejsp.entities.UserEntity;
 import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
+import com.github.julioevencio.sitememejsp.exceptions.UpdateFailedException;
 
 public interface UserRepository {
 
@@ -20,5 +21,7 @@ public interface UserRepository {
 	void save(Connection connection, UserEntity userEntity) throws CreateFailedException;
 
 	void addRole(Connection connection, UserEntity userEntity, RoleEntity roleEntity) throws CreateFailedException;
+
+	void update(Connection connection, UserEntity userEntity) throws UpdateFailedException;
 
 }
