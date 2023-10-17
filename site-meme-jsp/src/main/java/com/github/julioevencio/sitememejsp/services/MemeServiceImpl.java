@@ -2,6 +2,7 @@ package com.github.julioevencio.sitememejsp.services;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.github.julioevencio.sitememejsp.dto.meme.MemeResponseDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.PostMemeRequestDTO;
+import com.github.julioevencio.sitememejsp.dto.meme.ViewAllMemeResponseDTO;
 import com.github.julioevencio.sitememejsp.entities.ImageEntity;
 import com.github.julioevencio.sitememejsp.entities.MemeEntity;
 import com.github.julioevencio.sitememejsp.entities.TagEntity;
@@ -45,6 +47,31 @@ public class MemeServiceImpl implements MemeService {
 	public List<String> findAllTags() {
 		try (Connection connection = ConnectionFactory.getConnection()) {
 			return tagRepository.findAll(connection).stream().map(tag -> tag.getName()).toList();
+		} catch (SQLException | DatabaseConnectionFailedException | FindFailedException e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public ViewAllMemeResponseDTO findAll() {
+		try (Connection connection = ConnectionFactory.getConnection()) {
+			ViewAllMemeResponseDTO viewAllMemeResponseDTO = new ViewAllMemeResponseDTO();
+			List<MemeEntity> memesEntities = memeRepository.findAll(connection);
+			List<MemeResponseDTO> memesResponseDTOs = new ArrayList<>();
+
+			for (MemeEntity meme : memesEntities) {
+				MemeResponseDTO memeDTO = new MemeResponseDTO();
+				ImageEntity imageEntity = imageRepository.findByUuid(connection, meme.getImage().getUuid()).orElseThrow(() -> new FindFailedException("Meme not found"));
+
+				memeDTO.setUuid(meme.getUuid());
+				memeDTO.setImage(imageEntity.getImageBase64());
+
+				memesResponseDTOs.add(memeDTO);
+			}
+
+			viewAllMemeResponseDTO.setMemes(memesResponseDTOs);
+
+			return viewAllMemeResponseDTO;
 		} catch (SQLException | DatabaseConnectionFailedException | FindFailedException e) {
 			throw new RuntimeException();
 		}

@@ -13,6 +13,8 @@ public interface MemeRepository {
 
 	Optional<MemeEntity> findByUuid(Connection connection, UUID uuid) throws FindFailedException;
 
+	List<MemeEntity> findAll(Connection connection) throws FindFailedException;
+
 	List<MemeEntity> findAllByUserUuid(Connection connection, UUID uuid) throws FindFailedException;
 
 	void save(Connection connection, MemeEntity memeEntity) throws CreateFailedException;

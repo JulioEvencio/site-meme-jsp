@@ -56,6 +56,41 @@ public class MemeRepositoryImpl implements MemeRepository {
 	}
 
 	@Override
+	public List<MemeEntity> findAll(Connection connection) throws FindFailedException {
+		String sql = "SELECT * FROM tb_memes;";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			List<MemeEntity> memesEntities = new ArrayList<>();
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					MemeEntity memeEntity = new MemeEntity();
+
+					ImageEntity imageEntity = new ImageEntity();
+					UserEntity userEntity = new UserEntity();
+					TagEntity tagEntity = new TagEntity();
+
+					memeEntity.setUuid(UUID.fromString(rs.getString("uuid")));
+
+					imageEntity.setUuid(UUID.fromString(rs.getString("image_uuid")));
+					userEntity.setUuid(UUID.fromString(rs.getString("user_uuid")));
+					tagEntity.setUuid(UUID.fromString(rs.getString("tag_uuid")));
+
+					memeEntity.setImage(imageEntity);
+					memeEntity.setUser(userEntity);
+					memeEntity.setTag(tagEntity);
+
+					memesEntities.add(memeEntity);
+				}
+			}
+
+			return memesEntities;
+		} catch (SQLException e) {
+			throw new FindFailedException(e.getMessage());
+		}
+	}
+
+	@Override
 	public List<MemeEntity> findAllByUserUuid(Connection connection, UUID uuid) throws FindFailedException {
 		String sql = "SELECT * FROM tb_memes WHERE user_uuid = ?;";
 

@@ -13,6 +13,10 @@
 					<a class="menu__link" href="<c:url value='/' />">Home</a>
 				</li>
 
+				<li class="menu__item">
+					<a class="menu__link" href="<c:url value='/meme/all' />">Memes</a>
+				</li>
+
 				<c:choose>
 					<c:when test="${not empty sessionScope.userSessionDTO}">
 						<li class="menu__item">

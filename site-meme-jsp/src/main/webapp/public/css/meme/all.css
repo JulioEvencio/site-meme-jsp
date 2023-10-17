@@ -1,0 +1,33 @@
+@charset "ISO-8859-1";
+
+.memes {
+	width: 100%;
+	padding: 10px;
+	border: 3px solid var(--blue);
+}
+
+.memes__list {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
+}
+
+.memes__item {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.memes__img {
+	max-width: 100%;
+	height: auto;
+	border: 3px solid var(--blue);
+}
+
+@media(max-width: 600px) {
+	.memes__list {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}

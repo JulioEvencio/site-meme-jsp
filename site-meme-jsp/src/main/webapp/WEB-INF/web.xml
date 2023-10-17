@@ -104,4 +104,14 @@
 		<servlet-name>UpdateProfileController</servlet-name>
 		<url-pattern>/user/update</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ViewAllMemeController</servlet-name>
+		<servlet-class>com.github.julioevencio.sitememejsp.controllers.meme.ViewAllMemeController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewAllMemeController</servlet-name>
+		<url-pattern>/meme/all</url-pattern>
+	</servlet-mapping>
 </web-app>
