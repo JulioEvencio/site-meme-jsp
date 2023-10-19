@@ -8,9 +8,12 @@ import java.util.UUID;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import com.github.julioevencio.sitememejsp.dto.meme.CommentResponseDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.MemeResponseDTO;
+import com.github.julioevencio.sitememejsp.dto.meme.PostCommentRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.PostMemeRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.ViewAllMemeResponseDTO;
+import com.github.julioevencio.sitememejsp.entities.CommentEntity;
 import com.github.julioevencio.sitememejsp.entities.ImageEntity;
 import com.github.julioevencio.sitememejsp.entities.MemeEntity;
 import com.github.julioevencio.sitememejsp.entities.TagEntity;
@@ -19,6 +22,8 @@ import com.github.julioevencio.sitememejsp.exceptions.CreateFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.DatabaseConnectionFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.FindFailedException;
 import com.github.julioevencio.sitememejsp.exceptions.InvalidDataException;
+import com.github.julioevencio.sitememejsp.repositories.CommentRepository;
+import com.github.julioevencio.sitememejsp.repositories.CommentRepositoryImpl;
 import com.github.julioevencio.sitememejsp.repositories.ConnectionFactory;
 import com.github.julioevencio.sitememejsp.repositories.ImageRepository;
 import com.github.julioevencio.sitememejsp.repositories.ImageRepositoryImpl;
@@ -35,12 +40,14 @@ public class MemeServiceImpl implements MemeService {
 	private final ImageRepository imageRepository;
 	private final UserRepository userRepository;
 	private final TagRepository tagRepository;
+	private final CommentRepository commentRepository;
 
 	public MemeServiceImpl() {
 		this.memeRepository = new MemeRepositoryImpl();
 		this.imageRepository = new ImageRepositoryImpl();
 		this.userRepository = new UserRepositoryImpl();
 		this.tagRepository = new TagRepositoryImpl();
+		this.commentRepository = new CommentRepositoryImpl();
 	}
 
 	@Override
@@ -93,6 +100,21 @@ public class MemeServiceImpl implements MemeService {
 			memeResponseDTO.setUsername(userEntity.getUsername());
 			memeResponseDTO.setTag(tagEntity.getName());
 
+			List<CommentEntity> commentEntities = commentRepository.findByMemeUuid(connection, memeEntity.getUuid());
+			List<CommentResponseDTO> comments = new ArrayList<>();
+
+			for (CommentEntity commentEntity : commentEntities) {
+				CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
+				UserEntity user = userRepository.findByUuid(connection, commentEntity.getUser().getUuid()).orElseThrow(() -> new RuntimeException());
+
+				commentResponseDTO.setUsername(user.getUsername());
+				commentResponseDTO.setComment(commentEntity.getComment());
+
+				comments.add(commentResponseDTO);
+			}
+
+			memeResponseDTO.setComments(comments);
+
 			return memeResponseDTO;
 		} catch (SQLException | DatabaseConnectionFailedException | FindFailedException e) {
 			throw new RuntimeException();
@@ -128,6 +150,43 @@ public class MemeServiceImpl implements MemeService {
 
 				connection.commit();
 			} catch (SQLException | CreateFailedException | FindFailedException e) {
+				try {
+					connection.rollback();
+				} catch (SQLException rollbackException) {
+					throw new RuntimeException();
+				}
+
+				e.printStackTrace();
+
+				throw new RuntimeException();
+			}
+		} catch (SQLException | DatabaseConnectionFailedException databaseConnectionFailedException) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public void save(PostCommentRequestDTO dto) {
+		try (Connection connection = ConnectionFactory.getConnection()) {
+			try {
+				connection.setAutoCommit(false);
+
+				CommentEntity commentEntity = new CommentEntity();
+				UserEntity userEntity = new UserEntity();
+				MemeEntity memeEntity = new MemeEntity();
+
+				commentEntity.setComment(dto.getComment());
+				
+				userEntity.setUuid(dto.getUserSessionDTO().getUuid());
+				commentEntity.setUser(userEntity);
+
+				memeEntity.setUuid(dto.getMemeUuid());
+				commentEntity.setMeme(memeEntity);
+
+				commentRepository.save(connection, commentEntity);
+
+				connection.commit();
+			} catch (SQLException | CreateFailedException e) {
 				try {
 					connection.rollback();
 				} catch (SQLException rollbackException) {

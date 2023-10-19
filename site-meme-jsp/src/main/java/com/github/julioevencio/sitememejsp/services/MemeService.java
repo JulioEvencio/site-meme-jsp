@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.github.julioevencio.sitememejsp.dto.meme.MemeResponseDTO;
+import com.github.julioevencio.sitememejsp.dto.meme.PostCommentRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.PostMemeRequestDTO;
 import com.github.julioevencio.sitememejsp.dto.meme.ViewAllMemeResponseDTO;
 import com.github.julioevencio.sitememejsp.exceptions.InvalidDataException;
@@ -17,5 +18,7 @@ public interface MemeService {
 	MemeResponseDTO findMemeByUuid(UUID uuid);
 
 	void save(PostMemeRequestDTO dto) throws InvalidDataException;
+
+	void save(PostCommentRequestDTO dto);
 
 }

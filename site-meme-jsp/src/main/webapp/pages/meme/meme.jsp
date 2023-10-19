@@ -23,6 +23,37 @@
 					<img class="image__img" src="${memeResponseDTO.image}" alt="Meme image" />
 				</figure>
 			</section>
+
+			<section class="comments">
+				<div class="comments__post">
+					<form class="comments__form" action="<c:url value='/meme' />" method="post">
+						<c:if test="${memeResponseDTO.messageSuccess}">
+							<span class="message message__success">${memeResponseDTO.message}</span>
+						</c:if>
+
+						<c:if test="${memeResponseDTO.messageError}">
+							<span class="message message__error">${memeResponseDTO.message}</span>
+						</c:if>
+
+						<input type="text" name="uuid" value="${memeResponseDTO.uuid}" hidden />
+
+						<label>New comment:</label>
+						<input type="text" name="comment" value="${memeResponseDTO.comment}" required />
+
+						<button type="submit">Post comment</button>
+					</form>
+				</div>
+
+				<div class="comments__items">
+					<c:forEach var="comment" items="${memeResponseDTO.comments}">
+						<div class="comments__item">
+							<h2>${comment.username}</h2>
+							<hr />
+							<p>${comment.comment}</p>
+						</div>
+					</c:forEach>
+				</div>
+			</section>
 		</div>
 	</main>
 
